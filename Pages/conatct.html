@@ -1,0 +1,285 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url("../Fonts/Montserrat/Montserrat-VariableFont_wght.ttf")format('truetype');
+}
+@font-face {
+    font-family: "Oleo Script";
+    src: url('../Fonts/Oleo_Script/OleoScript-Regular.ttf')format('truetype');
+}
+body{
+    background-color: #24252a;
+    font-family: "Montserrat", sans-serif;
+    color:white;
+    font-optical-sizing:initial;
+    margin:0;
+    overflow: hidden;
+}
+a{
+    list-style: none;
+    text-decoration: none;
+    color:white;
+}
+header{
+    width:1600px;
+    max-width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns: 150px 1fr 150px;
+    grid-template-rows: 50px;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+    z-index:100;
+}
+header .Logo{
+    font-family: "Oleo Script" , system-ui;
+    font-style: italic;
+    font-size: x-large;
+}
+header .menu{
+    padding: 0;
+    margin:0;
+    list-style: none;
+    display:flex;
+    justify-content: center;
+    gap:20px;
+}
+.main-content{
+    display:flex;
+    position: relative;
+}
+.Image{
+    position: absolute;
+}
+.Image img{
+    margin-top: -50px;;
+    width:100vw;
+    height:100vh;
+    object-fit: cover;
+}
+.Icons{
+    overflow: visible;
+    position: absolute;
+    margin-top:3%;
+    left:10%;
+    background:transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    transform: translateX(-50%);
+    width: fit-content;
+}
+.Icons i{
+    transition: all 0.3s ease;
+}
+.info-box{
+    position: absolute;
+    background-color: rgba(255,255,255,0.1);
+    padding :10px 20px;
+    border-radius: 10px;
+    opacity:0;
+    transform:translateX(-20px);
+    transition: all0.3s ease;
+    white-space: nowrap;
+    color:black;
+    font-size: xx-large;
+    font-weight: 800;
+}
+.Icon-Conatiner:hover i{
+    background: rgba(255,255,255,0.1);
+    transform:scale(1.1);
+}
+.Icon-Conatiner:hover .info-box{
+    opacity:1;
+    transform: translateX(0);
+}
+.contact-form {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    top:500px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #24252a;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background: #24252a;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background: #363940;
+    transform: translateY(-2px);
+}
+
+</style>
+
+</head>
+<body>
+    <header>
+        <div class="Logo">
+            <a class="Logo"><h1>WeeFit</h1></a>
+        </div>
+        <ul class="menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Pages/Workout.html">Workouts</a></li>
+                <li><a href="../Pages/Nutrition.html">Nutrition</a></li>
+                <li><a href="../Pages/conatct.html">Contact Us</a></li>
+                <li><a href="../Pages/BMI.html">About You</a></li>
+                <li><a href="../Pages/Transformation.html">Transformation</a></li>
+        </ul>      
+        <div class="Tail">
+            <a href="../Pages/About_US.html">About US</a>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="Image">
+            <img src="../Images/Contact.jpg">
+        </div>
+        <div class="Icons">
+            <div class="Icon-Conatiner">
+                <i class="fa fa-envelope fa-3x" aria-hidden="true"></i>
+                <div class="info-box">
+                    weefit@gmail.com
+                </div>
+            </div>
+            <div class="Icon-Conatiner">
+                <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
+                <div class="info-box">
+                    WeeFitFitness
+                </div>
+            </div>
+            <div class="Icon-Conatiner">
+                <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+                <div class="info-box">WeeFitFitness</div>
+            </div>
+            <div class="Icon-Conatiner">
+                <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
+                <div class="info-box">
+                @Weefit8743
+                </div>
+            </div>
+            <div class="Icon-Conatiner">
+                <i class="fa fa-phone fa-3x" aria-hidden="true"></i>
+                <div class="info-box">
+                    +1 (999) 923-4642
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+    
+    <script>
+        const form = document.querySelector('.contact-form');
+        const submitBtn = form.querySelector('.submit-btn');
+        const successMessage = form.querySelector('.success-message');
+        const errorMessage = form.querySelector('.error-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Show success message
+                    form.reset();
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                // Show error message
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 5000);
+            } finally {
+                // Reset button state
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+    </script>
+</body>
+</html>

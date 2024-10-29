@@ -1,0 +1,501 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workouts</title>
+    <style>
+        @font-face {
+    font-family: 'Montserrat';
+    src: url("../Fonts/Montserrat/Montserrat-VariableFont_wght.ttf")format('truetype');
+}
+@font-face {
+    font-family: "Oleo Script";
+    src: url('../Fonts/Oleo_Script/OleoScript-Regular.ttf')format('truetype');
+}
+
+body{
+    background-color: #24252a;
+    font-family: "Montserrat", sans-serif;
+    color:white;
+    font-optical-sizing:initial;
+    margin:0;
+
+}
+a{
+    list-style: none;
+    text-decoration: none;
+    color:white;
+}
+header{
+    width:1600px;
+    max-width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns: 150px 1fr 150px;
+    grid-template-rows: 50px;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+    z-index:100;
+}
+header .Logo{
+    font-weight: bold;
+    font-family: "Oleo Script", system-ui;
+    font-style: italic;
+    font-size: x-large;
+}
+header .menu{
+    padding: 0;
+    margin:0;
+    list-style: none;
+    display:flex;
+    justify-content: center;
+    gap:20px;
+}
+
+.slider{
+    height: 100vh;
+    position:relative;
+    margin-top: -50px;
+}
+.slider .list .item{
+    position:absolute;
+    inset:0 0 0 0;
+    overflow: hidden;
+    opacity:0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+.slider .list .item img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+.slider .list .item::after{
+    content:'';
+    width:100%;
+    height: 100%;
+    position:absolute;
+    left:0;
+    bottom:0;
+    background-image:  linear-gradient(
+        to top, rgba(0,0,0,0.3) 0% , rgba(0,0,0,0.1) 50% , transparent 100%
+    );
+}
+.slider .list .item .Content{
+    position: absolute;
+    left:20%;
+    top:20%;
+    width: 500px;
+    max-width:80%;
+    z-index: 1;
+}
+.slider .list .item .Content p:nth-child(1){
+    text-transform: uppercase;
+    letter-spacing: 10px;
+}
+.slider .List .item h2{
+    font-size:100px;
+    margin: 0;
+}
+.slider .List .item.active{
+    opacity: 1;
+    visibility: visible;
+    z-index:10;
+}
+@keyframes showContent{
+    to{
+        transform:translateY(0);
+        filter:blur(0);
+        opacity:1;
+    }
+}
+.slider .List .item.active p:nth-child(1),
+.slider .List .item.active h2,
+.slider .List .item.active p:nth-child(3){
+    transform: translateY(30px);
+    filter : blur(20px);
+    opacity:0;
+    animation:showContent .5s .7s ease-in-out 1 forwards;
+}
+.slider .List .item.active h2{
+    animation-delay:1s;
+
+}
+.slider .List .item.active p:nth-child(3){
+    animation-duration: 1.3s;
+}
+.arrows{
+    position:absolute;
+    top:30%;
+    right:50px;
+    z-index: 100;
+}
+.arrows button{
+    background-color: rgba(238,238,238,0.3);
+    border:none;
+    font-family: monospace;
+    width:40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: x-large;
+    color:#eee;
+    cursor:pointer;
+    transition:all .5s ease;
+
+}
+.arrows button:hover{
+    background-color: rgba(238,238,238,0.8);
+    color:black;
+    transform: scale(1.1);
+}
+.thumbnail{
+    position:absolute;
+    bottom:50px;
+    z-index:11;
+    display:flex;
+    gap:10px;
+    width:100%;
+    height:250px;
+    padding : 0 50px;
+    box-sizing: border-box;
+    overflow: auto;
+    cursor:pointer;
+}
+.thumbnail::-webkit-scrollbar{
+    width:0;
+}
+.thumbnail .item{
+    width:150px;
+    height: 220px;
+    filter: brightness(.5);
+    transition: .5s;
+    flex-shrink: 0;
+}
+.thumbnail .item img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    border-radius:10px;
+}
+.thumbnail .item.active{
+    filter:brightness(1.5)
+}
+.thumbnail .item .Content{
+    position: absolute;
+    inset :auto 10px 10px 10px;
+}
+@media screen and (max-width:678px){
+    .thumbnail{
+        justify-content: start;
+    }
+    .slider .List .item .content h2{
+        font-size: 60px;
+    }
+    .arrows{
+        top:10%;
+    }
+}
+    </style>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    let items = document.querySelectorAll('.slider .list .item');
+    let next = document.getElementById('next');
+    let prev = document.getElementById('prev');
+    let thumbnails = document.querySelectorAll('.thumbnail .item');
+    let countItem = items.length;
+    let itemActive = 0;
+    let autoplayInterval;
+    const autoplayDelay = 4000; // Time in milliseconds between slides (3 seconds)
+
+    // Function to move to next slide
+    function nextSlide() {
+        itemActive = itemActive + 1;
+        if(itemActive >= countItem) {
+            itemActive = 0;
+        }
+        showSlider();
+    }
+
+    // Function to move to previous slide
+    function prevSlide() {
+        itemActive = itemActive - 1;
+        if(itemActive < 0) {
+            itemActive = countItem - 1;
+        }
+        showSlider();
+    }
+
+    // Start autoplay
+    function startAutoplay() {
+        stopAutoplay();
+        autoplayInterval = setInterval(nextSlide, autoplayDelay);
+    }
+
+    // Stop autoplay
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+
+    // Event Next Click
+    next.onclick = function() {
+        stopAutoplay(); // Stop autoplay when manually navigating
+        nextSlide();
+        startAutoplay(); // Restart autoplay
+    }
+
+    // Event Prev Click
+    prev.onclick = function() {
+        stopAutoplay(); // Stop autoplay when manually navigating
+        prevSlide();
+        startAutoplay(); // Restart autoplay
+    }
+
+    // Show Slider
+    function showSlider() {
+        // Remove active class from current items
+        let itemActiveOld = document.querySelector('.slider .list .item.active');
+        let thumbnailActiveOld = document.querySelector('.thumbnail .item.active');
+        
+        itemActiveOld.classList.remove('active');
+        thumbnailActiveOld.classList.remove('active');
+
+        // Add active class to new items
+        items[itemActive].classList.add('active');
+        thumbnails[itemActive].classList.add('active');
+        thumbnails[itemActive].scrollIntoView({
+        behavior: 'smooth',  // Optional for smooth scrolling
+        block: 'nearest',    // Aligns the thumbnail at the nearest edge
+        inline: 'center'     // Center the thumbnail horizontally in the container
+    });
+    }
+
+    // Add click events to thumbnails
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.onclick = function() {
+            stopAutoplay(); // Stop autoplay when manually navigating
+            itemActive = index;
+            showSlider();
+            startAutoplay(); // Restart autoplay
+        }
+    });
+
+    // Pause autoplay when hovering over slider
+    document.querySelector('.slider').addEventListener('mouseenter', stopAutoplay);
+    document.querySelector('.slider').addEventListener('mouseleave', startAutoplay);
+
+    // Start autoplay when page loads
+    startAutoplay();
+});
+    </script>
+</head>
+<body>
+
+    <header>
+        <div class="Logo">
+            <a class="Logo"><h1>WeeFit</h1></a>
+        </div>
+        <ul class="menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Pages/Workout.html">Workouts</a></li>
+                <li><a href="../Pages/Nutrition.html">Nutrition</a></li>
+                <li><a href="../Pages/conatct.html">Contact Us</a></li>
+                <li><a href="../Pages/BMI.html">About You</a></li>
+                <li><a href="../Pages/Transformation.html">Transformation</a></li>
+        </ul>      
+        <div class="Tail">
+            <a href="../Pages/About_US.html">About US</a>
+        </div>
+    </header>
+    <!--Slider-->
+    <div class="slider">
+        <div class="list">
+            <div class="item active">
+                    <img src="../Images/Push_Up.jpg">
+                    <div class='Content'>
+                        <p>Home Workout</p>
+                        <h2>Push Ups</h2>
+                        <p>1.Lay down on the floor facing down<br/>
+                           2.Put your palms and the tip of your foot on the ground.<br/>
+                           3.Perform the exercise by bending the arms.<br/>
+                        </p>
+                    </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Squats.jpg">
+                <div class='Content'>
+                    <p>Home Workout</p>
+                    <h2>Squats</h2>
+                    <p> 1.Stand upright<br/>
+                        2.With your back straight try sit ups.
+
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Planks.jpg">
+                <div class="Content">
+                    <p>Home Workout</p>
+                    <h2>Planks</h2>
+                    <p>1.Lay down on the ground facing down<br/>
+                       2.Put your arm from elbow to the wrist on the ground<br/>
+                       3.Exercise is performed by putting your toes on the ground<br/>
+                       4.Lift up your middle body and hold it there.
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Lunges.jpg">
+                <div class='Content'>
+                    <p>Home Workout</p>
+                    <h2>Lunges</h2>
+                    <p>1.Start by standing straight with your feet shoulder-width apart.<br/>
+                       2.Step forward with one foot, keeping the knee over the ankle and lowering the back knee towards the ground.<br/>
+                       3.Push back up with the front foot to return to the starting position, then repeat with the other leg. Remember
+                         to maintain proper form throughout the exercise.
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Crunches.jpg">
+                <div class='Content'>
+                    <p>Home Workout</p>
+                    <h2>Crunches</h2>
+                    <p>1. Lie flat on your back with your knees bent and feet flat on the floor.<br/>
+                       2. Place your hands behind your head, elbow-width apart.<br/>
+                       3. Tighten your core muscles and slowly lift your upper body off the ground, using your abs to propel yourself up.<br/>
+                       4. Lower your upper body back down towards the floor, maintaining control of the movement. Repeat for 10-15
+                          repetitions or as desired.
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Bench_press.jpg">
+                <div class='Content'>
+                    <p>Gym Workout</p>
+                    <h2>Bench Press</h2>
+                    <p>1.Select your desire weight<br/>
+                       2.Lay on the bench<br/>
+                       3. With help try to lift uo and down the weights
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Dumbell_Curls.jpg">
+                <div class='Content'>
+                    <p>Gym Workout</p>
+                    <h2>Dumbell Curls</h2>
+                    <p>1.Get the desire weight and make the back staright<br/>
+                       2.Try to slowly curl your hand.
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Dead_Lifting.jpg">
+                <div class='Content'>
+                    <p>Gym Workout</p>
+                    <h2>Dead Lifting</h2>
+                    <p>1.Get the weight and keep the back straight
+                       2.Keeping your back straight during the downward moment<br/>
+                       3.Lift up the weight without distorting your position.
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Leg_press.jpg">
+                <div class='Content'>
+                    <p>Gym Workout</p>
+                    <h2>Leg Press</h2>
+                    <p>1.Get the right Weights and lay on the bench<br/>
+                        2.With your feet against the weights try to remove the safety lock<br/>
+                        3.Push up and down with your legs
+                    
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Sled_push.jpg">
+                <div class='Content'>
+                    <p>Gym Workout</p>
+                    <h2>Sled Push</h2>
+                    <p>1. Stand with your feet shoulder-width apart and hold onto the handles of a sled.<br/>
+                        2. Bend your knees slightly and engage your core muscles. Push the sled forward using your legs, keeping it close
+                        to your body.<br/>
+                        3. After you've pushed the sled as far as possible, slowly bring it back towards you by reversing the motion with
+                        your legs. Repeat for 10-15 repetitions or as desired.
+                    </p>
+                </div> 
+            </div>       
+            
+            
+        </div>
+        <div class="arrows">
+            <button id="prev"><</button>
+            <button id="next">></button>
+        </div>
+        <div class="thumbnail">
+            <div class="item active">
+                <img src="../Images/Push_Up.jpg">
+                <div class="content">
+                    Push Up
+                </div>    
+            </div>
+            <div class="item">
+                <img src="../Images/Squats.jpg">
+                <div class="content">
+                    Squats
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Planks.jpg">
+                <div class="content">
+                    Planks
+                </div>
+            </div>
+            <div class="item">
+                <img src="../Images/Lunges.jpg">
+                <div class="content">
+                    Lunges
+                </div>    
+            </div>
+            <div class="item">
+                <img src="../Images/Crunches.jpg">
+                <div class="content">
+                    Crunches
+                </div>     
+            </div>
+            <div class="item">
+                <img src="../Images/Bench_press.jpg">
+                <div class="content">
+                    Bench press
+                </div>     
+            </div>
+            <div class="item">
+                <img src="../Images/Dumbell_Curls.jpg">
+                <div class="content">
+                    Dumbell Curls
+                </div>    
+            </div>
+            <div class="item">
+                <img src="../Images/Dead_Lifting.jpg">
+                <div class="content">
+                    Dead Lifting
+                </div>    
+            </div>
+            <div class="item">
+                <img src="../Images/Leg_press.jpg">
+                <div class="content">
+                    Leg Press
+                </div>     
+            </div>
+            <div class="item">
+                <img src="../Images/Sled_push.jpg">
+                <div class="content">
+                    Sled Push
+                </div>    
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
